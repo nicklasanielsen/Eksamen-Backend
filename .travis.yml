@@ -22,7 +22,7 @@ before_install:
 before_script:
   - sudo -E apt-get -y install mysql-server
   - sudo mysql -u root -e "CREATE User 'dev'@'localhost' IDENTIFIED BY 'ax2'; GRANT ALL PRIVILEGES ON *.* TO 'dev'@'localhost' WITH GRANT OPTION;"
-  - sudo mysql -u dev -pax2 -e "CREATE DATABASE eksamen_test;"
+  - sudo mysql -u dev -pax2 -e "CREATE DATABASE exam_test;"
 
 script:
   - cd ./application
