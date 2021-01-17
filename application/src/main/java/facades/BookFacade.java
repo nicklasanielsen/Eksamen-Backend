@@ -2,6 +2,7 @@ package facades;
 
 import DTOs.BookDTO;
 import entities.Book;
+import entities.Loan;
 import errorhandling.exceptions.BookCreationException;
 import errorhandling.exceptions.BookNotFoundException;
 import errorhandling.exceptions.DatabaseException;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
 
@@ -132,6 +132,12 @@ public class BookFacade {
 
             em.getTransaction().begin();
             Book book = em.find(Book.class, isbn);
+
+            List<Loan> loans = book.getLoans();
+            for (Loan loan : loans) {
+                em.remove(loan);
+            }
+
             em.remove(book);
             em.getTransaction().commit();
 
