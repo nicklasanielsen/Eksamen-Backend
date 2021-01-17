@@ -3,8 +3,8 @@ package facades;
 import DTOs.BookDTO;
 import entities.Book;
 import entities.Loan;
-import errorhandling.exceptions.BookCreationException;
-import errorhandling.exceptions.BookNotFoundException;
+import errorhandling.exceptions.CreationException;
+import errorhandling.exceptions.NotFoundException;
 import errorhandling.exceptions.DatabaseException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,14 +41,14 @@ public class BookFacade {
         return emf.createEntityManager();
     }
 
-    public BookDTO createBook(long isbn, String title, String authors, String publisher, int yearPublished) throws BookCreationException, DatabaseException, BookNotFoundException {
+    public BookDTO createBook(long isbn, String title, String authors, String publisher, int yearPublished) throws CreationException, DatabaseException, NotFoundException {
         EntityManager em = getEntityManager();
 
         try {
             try {
                 findBookByISBN(isbn);
-                throw new BookCreationException(isbn + " already in use.");
-            } catch (BookNotFoundException e) {
+                throw new CreationException(isbn + " already in use.");
+            } catch (NotFoundException e) {
 
             }
 
@@ -74,14 +74,14 @@ public class BookFacade {
         }
     }
 
-    public BookDTO editBook(long isbn, String title, String authors, String publisher, int yearPublished) throws DatabaseException, BookNotFoundException {
+    public BookDTO editBook(long isbn, String title, String authors, String publisher, int yearPublished) throws DatabaseException, NotFoundException {
         EntityManager em = getEntityManager();
 
         try {
             Book book = em.find(Book.class, isbn);
 
             if (book == null) {
-                throw new BookNotFoundException();
+                throw new NotFoundException("book");
             }
 
             em.getTransaction().begin();
@@ -120,13 +120,13 @@ public class BookFacade {
         }
     }
 
-    public boolean deleteBook(long isbn) throws BookNotFoundException {
+    public boolean deleteBook(long isbn) throws NotFoundException {
         EntityManager em = getEntityManager();
 
         try {
             try {
                 findBookByISBN(isbn);
-            } catch (BookNotFoundException e) {
+            } catch (NotFoundException e) {
                 return false;
             }
 
@@ -175,14 +175,14 @@ public class BookFacade {
         return bookDTOs;
     }
 
-    public Book findBookByISBN(long isbn) throws BookNotFoundException {
+    public Book findBookByISBN(long isbn) throws NotFoundException {
         EntityManager em = getEntityManager();
 
         try {
             Book book = em.find(Book.class, isbn);
 
             if (book == null) {
-                throw new BookNotFoundException();
+                throw new NotFoundException("book");
             }
 
             return book;

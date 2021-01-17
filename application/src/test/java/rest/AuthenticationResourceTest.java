@@ -288,7 +288,7 @@ public class AuthenticationResourceTest {
                 .then()
                 .assertThat()
                 .body("code", is(HttpStatus.BAD_REQUEST_400.getStatusCode())).and()
-                .body("message", is("Username already in use."));
+                .body("message", is("Could not create user, username already in use."));
     }
 
     @Test
@@ -304,7 +304,7 @@ public class AuthenticationResourceTest {
                 .then()
                 .assertThat()
                 .body("code", is(HttpStatus.BAD_REQUEST_400.getStatusCode())).and()
-                .body("message", is("Not all user credentials was provided."));
+                .body("message", is("Could not create user, not all user credentials was provided."));
     }
 
     @Test
@@ -320,7 +320,7 @@ public class AuthenticationResourceTest {
                 .then()
                 .assertThat()
                 .body("code", is(HttpStatus.BAD_REQUEST_400.getStatusCode())).and()
-                .body("message", is("Not all user credentials was provided."));
+                .body("message", is("Could not create user, not all user credentials was provided."));
     }
 
     @Test
@@ -336,7 +336,7 @@ public class AuthenticationResourceTest {
                 .then()
                 .assertThat()
                 .body("code", is(HttpStatus.BAD_REQUEST_400.getStatusCode())).and()
-                .body("message", is("Not all user credentials was provided."));
+                .body("message", is("Could not create user, not all user credentials was provided."));
     }
 
     @Test
@@ -352,7 +352,7 @@ public class AuthenticationResourceTest {
                 .then()
                 .assertThat()
                 .body("code", is(HttpStatus.BAD_REQUEST_400.getStatusCode())).and()
-                .body("message", is("Not all user credentials was provided."));
+                .body("message", is("Could not create user, not all user credentials was provided."));
     }
 
 }

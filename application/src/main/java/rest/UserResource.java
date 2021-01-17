@@ -2,7 +2,7 @@ package rest;
 
 import DTOs.UserDTO;
 import facades.UserFacade;
-import errorhandling.exceptions.UserNotFoundException;
+import errorhandling.exceptions.NotFoundException;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
@@ -46,7 +46,7 @@ public class UserResource {
     @Path("user/{userName}")
     @RolesAllowed("User")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("userName") String user) throws UserNotFoundException {
+    public Response getUser(@PathParam("userName") String user) throws NotFoundException {
         UserDTO userDTO = FACADE.getUserByUserName(user);
         return Response.ok(userDTO).build();
     }

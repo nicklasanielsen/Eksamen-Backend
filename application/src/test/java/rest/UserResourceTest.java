@@ -213,7 +213,7 @@ public class UserResourceTest {
                 .statusCode(400)
                 .assertThat()
                 .body("code", is(HttpStatus.BAD_REQUEST_400.getStatusCode())).and()
-                .body("message", is("Couldn't find user with username: fail"));
+                .body("message", is("Could not find fail"));
     }
 
     @Test

@@ -4,8 +4,8 @@ import DTOs.BookDTO;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import errorhandling.exceptions.API_Exception;
-import errorhandling.exceptions.BookCreationException;
-import errorhandling.exceptions.BookNotFoundException;
+import errorhandling.exceptions.CreationException;
+import errorhandling.exceptions.NotFoundException;
 import errorhandling.exceptions.DatabaseException;
 import facades.BookFacade;
 import java.util.List;
@@ -47,7 +47,7 @@ public class BookResource {
     @RolesAllowed("Admin")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createBook(String jsonString) throws API_Exception, DatabaseException, BookCreationException {
+    public Response createBook(String jsonString) throws API_Exception, DatabaseException, CreationException {
         long isbn;
         String title, authors, publisher;
         int yearPublished;
@@ -71,8 +71,8 @@ public class BookResource {
 
             return Response.ok(bookDTO).build();
         } catch (Exception e) {
-            if (e instanceof BookCreationException) {
-                throw (BookCreationException) e;
+            if (e instanceof CreationException) {
+                throw (CreationException) e;
             } else if (e instanceof DatabaseException) {
                 throw (DatabaseException) e;
             }
@@ -86,7 +86,7 @@ public class BookResource {
     @RolesAllowed("Admin")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editBook(@PathParam("isbn") String isbn, String jsonString) throws API_Exception, DatabaseException, BookNotFoundException {
+    public Response editBook(@PathParam("isbn") String isbn, String jsonString) throws API_Exception, DatabaseException, NotFoundException {
         long bookIsbn;
         String title, authors, publisher;
         int yearPublished;
@@ -112,7 +112,7 @@ public class BookResource {
     @Path("{isbn}")
     @RolesAllowed("Admin")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteBook(@PathParam("isbn") String isbn) throws API_Exception, BookNotFoundException {
+    public Response deleteBook(@PathParam("isbn") String isbn) throws API_Exception, NotFoundException {
         long id;
 
         try {

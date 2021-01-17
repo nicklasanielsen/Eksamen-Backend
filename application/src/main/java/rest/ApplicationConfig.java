@@ -22,10 +22,10 @@ public class ApplicationConfig extends Application {
         resources.add(cors.CorsFilter.class);
         resources.add(errorhandling.mappers.API_ExceptionMapper.class);
         resources.add(errorhandling.mappers.AuthenticationExceptionMapper.class);
+        resources.add(errorhandling.mappers.CreationExceptionMapper.class);
         resources.add(errorhandling.mappers.GenericExceptionMapper.class);
         resources.add(errorhandling.mappers.NotAuthorizedExceptionMapper.class);
-        resources.add(errorhandling.mappers.UserCreationExceptionMapper.class);
-        resources.add(errorhandling.mappers.UserNotFoundExceptionMapper.class);
+        resources.add(errorhandling.mappers.NotFoundExceptionMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(rest.AuthenticationResource.class);
         resources.add(rest.BookResource.class);

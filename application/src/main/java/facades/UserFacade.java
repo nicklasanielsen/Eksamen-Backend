@@ -4,8 +4,8 @@ import DTOs.UserDTO;
 import entities.Role;
 import entities.User;
 import errorhandling.exceptions.DatabaseException;
-import errorhandling.exceptions.UserCreationException;
-import errorhandling.exceptions.UserNotFoundException;
+import errorhandling.exceptions.CreationException;
+import errorhandling.exceptions.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -41,9 +41,9 @@ public class UserFacade {
         return emf.createEntityManager();
     }
 
-    public UserDTO createUser(String username, String firstName, String lastName, String password) throws DatabaseException, UserCreationException {
+    public UserDTO createUser(String username, String firstName, String lastName, String password) throws DatabaseException, CreationException {
         if (username.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()) {
-            throw new UserCreationException("Not all user credentials was provided.");
+            throw new CreationException("user, not all user credentials was provided.");
         }
 
         EntityManager em = getEntityManager();
@@ -55,7 +55,7 @@ public class UserFacade {
         try {
             // Checking if username is in use
             if (em.find(User.class, username) != null) {
-                throw new UserCreationException("Username already in use.");
+                throw new CreationException("user, username already in use.");
             }
 
             em.getTransaction().begin();
@@ -69,7 +69,7 @@ public class UserFacade {
 
             return new UserDTO(user);
         } catch (Exception e) {
-            if (e instanceof UserCreationException) {
+            if (e instanceof CreationException) {
                 throw e;
             }
 
@@ -94,21 +94,21 @@ public class UserFacade {
             }
 
             return new UserDTO(user);
-        } catch (UserNotFoundException e) {
+        } catch (NotFoundException e) {
             throw new AuthenticationException("Invalid username and/or password.");
         } finally {
             em.close();
         }
     }
 
-    public UserDTO getUserByUserName(String username) throws UserNotFoundException {
+    public UserDTO getUserByUserName(String username) throws NotFoundException {
         EntityManager em = getEntityManager();
 
         try {
             User user = em.find(User.class, username);
 
             if (user == null) {
-                throw new UserNotFoundException(username);
+                throw new NotFoundException(username);
             }
 
             return new UserDTO(user);
@@ -117,14 +117,14 @@ public class UserFacade {
         }
     }
 
-    public User getUserEntityByUserName(String username) throws UserNotFoundException {
+    public User getUserEntityByUserName(String username) throws NotFoundException {
         EntityManager em = getEntityManager();
 
         try {
             User user = em.find(User.class, username);
 
             if (user == null) {
-                throw new UserNotFoundException(username);
+                throw new NotFoundException(username);
             }
 
             return user;

@@ -26,7 +26,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import errorhandling.exceptions.AuthenticationException;
 import errorhandling.exceptions.DatabaseException;
-import errorhandling.exceptions.UserCreationException;
+import errorhandling.exceptions.CreationException;
 import javax.persistence.EntityManagerFactory;
 import security.SharedSecret;
 import utils.EMF_Creator;
@@ -83,7 +83,7 @@ public class AuthenticationResource {
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(String jsonString) throws AuthenticationException, API_Exception, DatabaseException, UserCreationException {
+    public Response register(String jsonString) throws AuthenticationException, API_Exception, DatabaseException, CreationException {
         String username, firstname, lastname, password;
         JsonObject jsonObject = new JsonObject();
 
@@ -108,11 +108,11 @@ public class AuthenticationResource {
             jsonObject.addProperty("token", token);
 
             return Response.ok(GSON.toJson(jsonObject)).build();
-        } catch (JOSEException | DatabaseException | UserCreationException e) {
+        } catch (JOSEException | DatabaseException | CreationException e) {
             if (e instanceof DatabaseException) {
                 throw (DatabaseException) e;
-            } else if (e instanceof UserCreationException) {
-                throw (UserCreationException) e;
+            } else if (e instanceof CreationException) {
+                throw (CreationException) e;
             }
 
             throw new API_Exception("Something went wrong, please try again later ...");

@@ -4,8 +4,8 @@ import DTOs.UserDTO;
 import entities.Role;
 import entities.User;
 import errorhandling.exceptions.DatabaseException;
-import errorhandling.exceptions.UserCreationException;
-import errorhandling.exceptions.UserNotFoundException;
+import errorhandling.exceptions.CreationException;
+import errorhandling.exceptions.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -87,7 +87,7 @@ public class UserFacadeTest {
     }
 
     @Test
-    public void createUser_Success() throws DatabaseException, UserCreationException {
+    public void createUser_Success() throws DatabaseException, CreationException {
         // Arrange
         user.setUserName("testUser");
         UserDTO expected = new UserDTO(user);
@@ -102,7 +102,7 @@ public class UserFacadeTest {
 
     @Test
     public void createUser_Failed_UserName_Already_In_Use() {
-        assertThrows(UserCreationException.class, () -> {
+        assertThrows(CreationException.class, () -> {
             facade.createUser(user.getUserName(),
                     user.getFirstName(), user.getLastName(), "STRONG_PASSWORD");
         });
@@ -137,7 +137,7 @@ public class UserFacadeTest {
     }
 
     @Test
-    public void getUserByUserName_Success() throws UserNotFoundException {
+    public void getUserByUserName_Success() throws NotFoundException {
         // Arrange
         UserDTO expected = userDTO;
 
@@ -152,7 +152,7 @@ public class UserFacadeTest {
     public void getUserByUserName_User_Not_Found() {
         user.setUserName("testUser");
 
-        assertThrows(UserNotFoundException.class, () -> {
+        assertThrows(NotFoundException.class, () -> {
             facade.getUserByUserName(user.getUserName());
         });
     }

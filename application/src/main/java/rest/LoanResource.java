@@ -4,9 +4,9 @@ import DTOs.LoanDTO;
 import entities.Book;
 import entities.User;
 import errorhandling.exceptions.API_Exception;
-import errorhandling.exceptions.BookNotFoundException;
+import errorhandling.exceptions.NotFoundException;
 import errorhandling.exceptions.DatabaseException;
-import errorhandling.exceptions.UserNotFoundException;
+import errorhandling.exceptions.NotFoundException;
 import facades.BookFacade;
 import facades.LoanFacade;
 import facades.UserFacade;
@@ -47,7 +47,7 @@ public class LoanResource {
     @Path("{isbn}")
     @RolesAllowed("User")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response loanBook(@PathParam("isbn") String isbn) throws API_Exception, UserNotFoundException, BookNotFoundException, DatabaseException {
+    public Response loanBook(@PathParam("isbn") String isbn) throws API_Exception, NotFoundException, DatabaseException {
         String userName = securityContext.getUserPrincipal().getName();
 
         long id;
@@ -112,7 +112,7 @@ public class LoanResource {
     @Path("user")
     @RolesAllowed("User")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllLoansByUser() throws UserNotFoundException {
+    public Response getAllLoansByUser() throws NotFoundException {
         String userName = securityContext.getUserPrincipal().getName();
         User user = USER_FACADE.getUserEntityByUserName(userName);
 
@@ -123,7 +123,7 @@ public class LoanResource {
     @Path("user/active")
     @RolesAllowed("User")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllActiveLoansByUser() throws UserNotFoundException {
+    public Response getAllActiveLoansByUser() throws NotFoundException {
         String userName = securityContext.getUserPrincipal().getName();
         User user = USER_FACADE.getUserEntityByUserName(userName);
 
@@ -134,7 +134,7 @@ public class LoanResource {
     @Path("user/inactive")
     @RolesAllowed("User")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllInactiveLoansByUser() throws UserNotFoundException {
+    public Response getAllInactiveLoansByUser() throws NotFoundException {
         String userName = securityContext.getUserPrincipal().getName();
         User user = USER_FACADE.getUserEntityByUserName(userName);
 
@@ -154,7 +154,7 @@ public class LoanResource {
     @Path("user/overdue")
     @RolesAllowed("User")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllLoansOverDueByUser() throws UserNotFoundException {
+    public Response getAllLoansOverDueByUser() throws NotFoundException {
         String userName = securityContext.getUserPrincipal().getName();
         User user = USER_FACADE.getUserEntityByUserName(userName);
 

@@ -2,8 +2,8 @@ package facades;
 
 import DTOs.BookDTO;
 import entities.Book;
-import errorhandling.exceptions.BookCreationException;
-import errorhandling.exceptions.BookNotFoundException;
+import errorhandling.exceptions.CreationException;
+import errorhandling.exceptions.NotFoundException;
 import errorhandling.exceptions.DatabaseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +89,7 @@ public class BookFacadeTest {
     }
 
     @Test
-    public void testCreateBook_Success() throws BookCreationException, DatabaseException, BookNotFoundException {
+    public void testCreateBook_Success() throws CreationException, DatabaseException, NotFoundException {
         // Arrange
         Book book = new Book(1111L, "test", "testerne", "testen", 2077);
         BookDTO expected = new BookDTO(book);
@@ -106,13 +106,13 @@ public class BookFacadeTest {
         // Arrange
         Book book = books.get(0);
 
-        assertThrows(BookCreationException.class, () -> {
+        assertThrows(CreationException.class, () -> {
             facade.createBook(book.getIsbn(), book.getTitle(), book.getAuthors(), book.getPublisher(), book.getYearPublished());
         });
     }
 
     @Test
-    public void testDeleteBook_Success() throws BookNotFoundException {
+    public void testDeleteBook_Success() throws NotFoundException {
         // Arrange
         long isbn = books.get(0).getIsbn();
 
@@ -124,7 +124,7 @@ public class BookFacadeTest {
     }
 
     @Test
-    public void testDeleteBook_Fail_BookNotFoundException() throws BookNotFoundException {
+    public void testDeleteBook_Fail_BookNotFoundException() throws NotFoundException {
         // Arrange
         long isbn = 1L;
 
@@ -162,7 +162,7 @@ public class BookFacadeTest {
     }
 
     @Test
-    public void testFindBookByISBN_Success() throws BookNotFoundException {
+    public void testFindBookByISBN_Success() throws NotFoundException {
         // Arrange
         Book expected = books.get(0);
         long isbn = expected.getIsbn();
@@ -179,7 +179,7 @@ public class BookFacadeTest {
         // Arrange
         long isbn = 1L;
 
-        assertThrows(BookNotFoundException.class, () -> {
+        assertThrows(NotFoundException.class, () -> {
             facade.findBookByISBN(isbn);
         });
     }
