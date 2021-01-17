@@ -162,10 +162,30 @@ public class BookFacade {
         Set<Book> books = new HashSet<>();
 
         try {
-            long isbn = Long.parseLong(searchCriteria);
-            books.add(findBookByISBN(isbn));
-        } catch (Exception e) {
+            try {
+                long isbn = Long.parseLong(searchCriteria);
+                books.add(findBookByISBN(isbn));
+            } catch (NumberFormatException e) {
 
+            }
+
+            for (Book book : findBooksByTitle(searchCriteria)) {
+                System.out.println(book.getTitle());
+                books.add(book);
+            }
+
+            for (Book book : findBooksByAuthors(searchCriteria)) {
+                System.out.println(book.getTitle());
+                books.add(book);
+            }
+
+            for (Book book : findBooksByPublisher(searchCriteria)) {
+                System.out.println(book.getTitle());
+                books.add(book);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
         books.forEach(book -> {
@@ -186,6 +206,57 @@ public class BookFacade {
             }
 
             return book;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Book> findBooksByTitle(String title) {
+        EntityManager em = getEntityManager();
+
+        List<Book> books;
+
+        try {
+            Query query = em.createNamedQuery("Book.findByTitle");
+            query.setParameter("title", title);
+
+            books = query.getResultList();
+
+            return books;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Book> findBooksByAuthors(String authors) {
+        EntityManager em = getEntityManager();
+
+        List<Book> books;
+
+        try {
+            Query query = em.createNamedQuery("Book.findByAuthors");
+            query.setParameter("authors", authors);
+
+            books = query.getResultList();
+
+            return books;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Book> findBooksByPublisher(String publisher) {
+        EntityManager em = getEntityManager();
+
+        List<Book> books;
+
+        try {
+            Query query = em.createNamedQuery("Book.findByPublisher");
+            query.setParameter("publisher", publisher);
+
+            books = query.getResultList();
+
+            return books;
         } finally {
             em.close();
         }

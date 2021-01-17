@@ -21,7 +21,11 @@ import javax.persistence.Table;
 @Table(name = "BOOKS")
 @NamedQueries({
     @NamedQuery(name = "Book.getAll", query = "SELECT b FROM Book b"),
-    @NamedQuery(name = "Book.deleteAllRows", query = "DELETE FROM Book")})
+    @NamedQuery(name = "Book.deleteAllRows", query = "DELETE FROM Book"),
+    @NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title LIKE :title"),
+    @NamedQuery(name = "Book.findByAuthors", query = "SELECT b FROM Book b WHERE b.authors LIKE :authors"),
+    @NamedQuery(name = "Book.findByPublisher", query = "SELECT b FROM Book b WHERE b.publisher LIKE :publisher")
+})
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
