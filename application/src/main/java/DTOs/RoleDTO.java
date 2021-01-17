@@ -1,5 +1,6 @@
 package DTOs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import entities.Role;
 import java.util.Objects;
 
@@ -9,20 +10,21 @@ import java.util.Objects;
  */
 public class RoleDTO {
 
-    private String roleName;
+    private final String ROLE_NAME;
 
     public RoleDTO(Role role) {
-        this.roleName = role.getRoleName();
+        ROLE_NAME = role.getRoleName();
     }
 
+    @JsonProperty("roleName")
     public String getRoleName() {
-        return roleName;
+        return ROLE_NAME;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.roleName);
+        int hash = 3;
+        hash = 61 * hash + Objects.hashCode(this.ROLE_NAME);
         return hash;
     }
 
@@ -38,10 +40,10 @@ public class RoleDTO {
             return false;
         }
         final RoleDTO other = (RoleDTO) obj;
-        if (!Objects.equals(this.roleName, other.roleName)) {
+        if (!Objects.equals(this.ROLE_NAME, other.ROLE_NAME)) {
             return false;
         }
         return true;
     }
-    
+
 }

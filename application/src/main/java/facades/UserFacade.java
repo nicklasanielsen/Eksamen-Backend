@@ -87,13 +87,15 @@ public class UserFacade {
         EntityManager em = getEntityManager();
 
         try {
-            User user = em.find(User.class, userName);
+            User user = getUserEntityByUserName(userName);
 
             if (user == null || !user.verifyPassword(password)) {
                 throw new AuthenticationException("Invalid username and/or password.");
             }
 
             return new UserDTO(user);
+        } catch (UserNotFoundException e) {
+            throw new AuthenticationException("Invalid username and/or password.");
         } finally {
             em.close();
         }
@@ -110,6 +112,22 @@ public class UserFacade {
             }
 
             return new UserDTO(user);
+        } finally {
+            em.close();
+        }
+    }
+
+    public User getUserEntityByUserName(String username) throws UserNotFoundException {
+        EntityManager em = getEntityManager();
+
+        try {
+            User user = em.find(User.class, username);
+
+            if (user == null) {
+                throw new UserNotFoundException(username);
+            }
+
+            return user;
         } finally {
             em.close();
         }

@@ -1,5 +1,7 @@
 package DTOs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import entities.Loan;
 import entities.Role;
 import entities.User;
 import java.text.SimpleDateFormat;
@@ -13,46 +15,50 @@ import java.util.Objects;
  */
 public class UserDTO {
 
-    private String userName;
-    private String fullName;
-    private List<RoleDTO> roleList = new ArrayList<>();
-    private String created;
+    private final String USERNAME;
+    private final String FULLNAME;
+    private final List<RoleDTO> ROLES = new ArrayList<>();
+    private final String CREATED;
 
     public UserDTO(User user) {
-        this.userName = user.getUserName();
-        this.fullName = user.getFirstName() + " " + user.getLastName();
+        this.USERNAME = user.getUserName();
+        this.FULLNAME = user.getFirstName() + " " + user.getLastName();
 
         for (Role role : user.getRoles()) {
-            roleList.add(new RoleDTO(role));
+            ROLES.add(new RoleDTO(role));
         }
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-        created = dateFormatter.format(user.getCreated());
+        CREATED = dateFormatter.format(user.getCreated());
     }
 
+    @JsonProperty("userName")
     public String getUserName() {
-        return userName;
+        return USERNAME;
     }
 
+    @JsonProperty("fullName")
     public String getFullName() {
-        return fullName;
+        return FULLNAME;
     }
 
+    @JsonProperty("joinedAt")
     public String getCreated() {
-        return created;
+        return CREATED;
     }
 
+    @JsonProperty("roles")
     public List<RoleDTO> getRoleList() {
-        return roleList;
+        return ROLES;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.userName);
-        hash = 53 * hash + Objects.hashCode(this.fullName);
-        hash = 53 * hash + Objects.hashCode(this.roleList);
-        hash = 53 * hash + Objects.hashCode(this.created);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.USERNAME);
+        hash = 53 * hash + Objects.hashCode(this.FULLNAME);
+        hash = 53 * hash + Objects.hashCode(this.ROLES);
+        hash = 53 * hash + Objects.hashCode(this.CREATED);
         return hash;
     }
 
@@ -68,13 +74,16 @@ public class UserDTO {
             return false;
         }
         final UserDTO other = (UserDTO) obj;
-        if (!Objects.equals(this.userName, other.userName)) {
+        if (!Objects.equals(this.USERNAME, other.USERNAME)) {
             return false;
         }
-        if (!Objects.equals(this.fullName, other.fullName)) {
+        if (!Objects.equals(this.FULLNAME, other.FULLNAME)) {
             return false;
         }
-        if (!Objects.equals(this.roleList, other.roleList)) {
+        if (!Objects.equals(this.CREATED, other.CREATED)) {
+            return false;
+        }
+        if (!Objects.equals(this.ROLES, other.ROLES)) {
             return false;
         }
         return true;

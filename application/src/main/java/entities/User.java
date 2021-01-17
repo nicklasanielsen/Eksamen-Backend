@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -68,6 +70,13 @@ public class User implements Serializable {
         @JoinColumn(name = "USER", referencedColumnName = "USERNAME")}, inverseJoinColumns = {
         @JoinColumn(name = "ROLE", referencedColumnName = "ROLE_NAME")})
     private List<Role> roles;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Loan> loans = new ArrayList<>();
 
     public User(String username, String firstname, String lastname, String password, List<Role> roles) {
         this.userName = username;
@@ -142,6 +151,20 @@ public class User implements Serializable {
             roles.remove(role);
             role.getUserList().remove(this);
         }
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void addLoan(Loan loan) {
+        loans.add(loan);
+        loan.setUser(this);
+    }
+
+    public void removeLoan(Loan loan) {
+        loans.remove(loan);
+        loan.setUser(null);
     }
 
     @Override
