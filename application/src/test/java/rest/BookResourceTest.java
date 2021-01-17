@@ -1,6 +1,5 @@
 package rest;
 
-import DTOs.BookDTO;
 import entities.Book;
 import entities.Role;
 import entities.User;
@@ -20,7 +19,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

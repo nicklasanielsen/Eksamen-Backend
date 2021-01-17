@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author Nikolaj Larsen
+ * @author Nicklas Nielsen
  */
 public class UserDTOTest {
 

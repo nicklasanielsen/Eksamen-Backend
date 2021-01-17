@@ -1,8 +1,6 @@
 package rest;
 
 import DTOs.UserDTO;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import facades.UserFacade;
 import errorhandling.exceptions.UserNotFoundException;
 import java.util.List;
@@ -20,7 +18,7 @@ import javax.ws.rs.core.SecurityContext;
 import utils.EMF_Creator;
 
 /**
- * @author Mathias Nielsen
+ *
  * @author Nicklas Nielsen
  */
 @Path("info")

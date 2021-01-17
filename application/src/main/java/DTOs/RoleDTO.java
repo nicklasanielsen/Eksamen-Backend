@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Mathias Nielsen
+ * @author Nicklas Nielsen
  */
 public class RoleDTO {
 

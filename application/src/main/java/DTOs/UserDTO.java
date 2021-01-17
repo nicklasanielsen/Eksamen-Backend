@@ -1,7 +1,6 @@
 package DTOs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import entities.Loan;
 import entities.Role;
 import entities.User;
 import java.text.SimpleDateFormat;
@@ -11,7 +10,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Mathias Nielsen
+ * @author Nicklas Nielsen
  */
 public class UserDTO {
 

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Nikolaj Larsen
+ * @author Nicklas Nielsen
  */
 @Entity
 @Table(name = "ROLES")
